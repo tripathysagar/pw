@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "pw"
+  site-url: "https://tripathysagar.github.io/pw"
+  description: "playwright"
+  repo-branch: main
+  repo-url: "https://github.com/tripathysagar/pw"
