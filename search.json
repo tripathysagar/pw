@@ -1,0 +1,182 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "pw",
+    "section": "",
+    "text": "This crawler implements a flexible web scraping system with callback hooks for extensibility, inspired by fastai’s callback system. The lib is motivated by AnswerDotAI playwrightnb. It achives by running etraction on multiple pages in single browser window. \n\n\nIf you are new to using nbdev here are some useful pointers to get you started.\n\n\n# make sure pw package is installed in development mode\n$ pip install -e .\n\n# make changes under nbs/ directory\n# ...\n\n# compile to have changes apply to pw\n$ nbdev_prepare\n\n\n\n\n\n\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/tripathysagar/pw.git\nor from conda\n$ conda install -c tripathysagar pw\nor from pypi\n$ pip install pw\n\n\n\nDocumentation can be found hosted on this GitHub repository’s pages. Additionally you can find package manager specific guidelines on conda and pypi respectively.\n\n\n\n\nFew other examples are in crawler\n\nfrom pw.crawler import *\nclass GetTextCB(Callback):\n    async def after_visit(self, crawler, idx):\n        if crawler.pages[idx].url == 'https://fastcore.fast.ai/':\n            loc = await crawler.pages[idx].find_ele('//span[contains(text(), \"Welcome to fastcore\")]')\n            if loc:\n                assert await loc[0].get_text() == \"Welcome to fastcore\"\n\nC = Crawl(2, ['https://solveit.fast.ai/', 'https://fastcore.fast.ai/'], [GetTextCB()])\nawait C.run(headless=False)",
+    "crumbs": [
+      "pw"
+    ]
+  },
+  {
+    "objectID": "index.html#developer-guide",
+    "href": "index.html#developer-guide",
+    "title": "pw",
+    "section": "",
+    "text": "If you are new to using nbdev here are some useful pointers to get you started.\n\n\n# make sure pw package is installed in development mode\n$ pip install -e .\n\n# make changes under nbs/ directory\n# ...\n\n# compile to have changes apply to pw\n$ nbdev_prepare",
+    "crumbs": [
+      "pw"
+    ]
+  },
+  {
+    "objectID": "index.html#usage",
+    "href": "index.html#usage",
+    "title": "pw",
+    "section": "",
+    "text": "Install latest from the GitHub repository:\n$ pip install git+https://github.com/tripathysagar/pw.git\nor from conda\n$ conda install -c tripathysagar pw\nor from pypi\n$ pip install pw\n\n\n\nDocumentation can be found hosted on this GitHub repository’s pages. Additionally you can find package manager specific guidelines on conda and pypi respectively.",
+    "crumbs": [
+      "pw"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "pw",
+    "section": "",
+    "text": "Few other examples are in crawler\n\nfrom pw.crawler import *\nclass GetTextCB(Callback):\n    async def after_visit(self, crawler, idx):\n        if crawler.pages[idx].url == 'https://fastcore.fast.ai/':\n            loc = await crawler.pages[idx].find_ele('//span[contains(text(), \"Welcome to fastcore\")]')\n            if loc:\n                assert await loc[0].get_text() == \"Welcome to fastcore\"\n\nC = Crawl(2, ['https://solveit.fast.ai/', 'https://fastcore.fast.ai/'], [GetTextCB()])\nawait C.run(headless=False)",
+    "crumbs": [
+      "pw"
+    ]
+  },
+  {
+    "objectID": "helper.html",
+    "href": "helper.html",
+    "title": "helper",
+    "section": "",
+    "text": "source\n\n\n\n print_md (s:str)\n\nGiven a string display markdown in Notebook",
+    "crumbs": [
+      "helper"
+    ]
+  },
+  {
+    "objectID": "helper.html#view-md-in-notebook",
+    "href": "helper.html#view-md-in-notebook",
+    "title": "helper",
+    "section": "",
+    "text": "source\n\n\n\n print_md (s:str)\n\nGiven a string display markdown in Notebook",
+    "crumbs": [
+      "helper"
+    ]
+  },
+  {
+    "objectID": "helper.html#extract-table-to-dataframe",
+    "href": "helper.html#extract-table-to-dataframe",
+    "title": "helper",
+    "section": "Extract table to dataframe",
+    "text": "Extract table to dataframe\n\nsource\n\ntable2df\n\n table2df (table:playwright.async_api._generated.Locator)\n\nGiven a html table element it extracts the table obj and convert it to pandas dataframe\n\nasync with setup_browser(n=1) as obj:\n    if obj.is_valid:\n        page = obj.pages[0]\n        await page.goto(\"https://en.wikipedia.org/wiki/List_of_largest_companies_by_revenue\")\n        await page.wait()\n        ele = await page.find_ele('//table[@class=\"wikitable sortable plainrowheaders jquery-tablesorter\"]') \n        assert len(ele) != 0\n\n        df = await ele[0].table2df()\n        assert len(df) != 0\n\ndf.head()\n\n\n\n\n\n\n\n\nRank\nCountry\nCompanies\n\n\n\n\n0\n1\nUnited States of America\n22\n\n\n1\n2\nChina\n11\n\n\n2\n3\nGermany\n4\n\n\n3\n4\nUnited Kingdom\n2\n\n\n4\n4\nSwitzerland\n2",
+    "crumbs": [
+      "helper"
+    ]
+  },
+  {
+    "objectID": "helper.html#extract-html-object-to-md",
+    "href": "helper.html#extract-html-object-to-md",
+    "title": "helper",
+    "section": "Extract html object to md",
+    "text": "Extract html object to md\n\nsource\n\nh2md\n\n h2md (ele:Union[playwright.async_api._generated.Page,playwright.async_api\n       ._generated.Locator])\n\nConvert HTML h to markdown using `HTML2Text\n\nasync with setup_browser(n=1) as obj:\n    if obj.is_valid:\n        page = obj.pages[0]\n        await page.goto(\"https://example.com/\")\n        await page.wait()        \n        print_md(await page.h2md())\n\nExample Domain\nThis domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission.\nMore information…\n\n\n\nasync with setup_browser(n=1) as obj:\n    if obj.is_valid:\n        page = obj.pages[0]\n        await page.goto(\"https://en.wikipedia.org/wiki/List_of_largest_companies_by_revenue\")\n        await page.wait()\n        ele = await page.find_ele('//table[@class=\"wikitable sortable plainrowheaders jquery-tablesorter\"]') \n        print_md(await ele[0].h2md())\n\nBreakdown by country Rank | Country | Companies\n1 | United States of America | 22\n2 | China | 11\n3 | Germany | 4\n4 | United Kingdom | 2\n4 | Switzerland | 2\n6 | Japan | 1\n6 | France | 1\n6 | Italy | 1\n6 | India | 1\n6 | Netherlands | 1\n6 | South Korea | 1\n6 | Saudi Arabia | 1\n6 | Singapore | 1\n6 | Taiwan | 1",
+    "crumbs": [
+      "helper"
+    ]
+  },
+  {
+    "objectID": "helper.html#domain-helpers",
+    "href": "helper.html#domain-helpers",
+    "title": "helper",
+    "section": "Domain helpers",
+    "text": "Domain helpers\n\nsource\n\ndomain\n\n domain (url:str)\n\nExtract domain i.e. netloc given a url\n\nurls = ['https://fast.ai/getting_started.html', 'https://fast.ai/getting_started.html#copyright', 'https://fast.ai/getting_started.html#year=2008-09&quarter=quarter1?a=3']\nassert domain(\"\") == \"\"\nassert domain(urls[0]) == 'fast.ai'\n\n\nsource\n\n\nis_same_resource\n\n is_same_resource (url1:str, url2:str)\n\nTakes in two urls and check if two url have any wuery param\n\nassert is_same_resource(*urls[:-1])\nassert not is_same_resource(*urls[1:])\n\n\nsource\n\n\nurl2fn\n\n url2fn (url:str)\n\n*takes in a url and return a filename by substituting it with _.*\n\n[url2fn(i) for i in urls]\n\n['fast_ai_getting_started_html',\n 'fast_ai_getting_started_html_copyright',\n 'fast_ai_getting_started_html_year_2008_09_quarter_quarter1_a_3']",
+    "crumbs": [
+      "helper"
+    ]
+  },
+  {
+    "objectID": "crawler.html",
+    "href": "crawler.html",
+    "title": "crawler",
+    "section": "",
+    "text": "This crawler implements a flexible web scraping system with callback hooks for extensibility, inspired by fastai’s callback system.  ## Architecture The crawler operates with two main callback hooks: before_visit and after_visit, with an ord parameter controlling execution order.\n\n\n\nParallel Processing:\n\nConfigurable number of pages (np) for concurrent processing\nEfficient browser resource management\n\nURL Management:\n\nInput: List of URLs to visit (to_visit)\nTracks progress through callback-accessible sets:\n\nvisited: Already processed URLs\nunvisited: Pending URLs\nvisit_window: Current batch of URLs (size = np)\n\n\nCallback System:\n\nExtensible through custom callbacks\nOrdered execution (ord)\nFull access to crawler state\n\n\n\nsource\n\n\n\n Crawl (np:int=1, to_visit:Optional[List[str]]=None, cbs=None)\n\nInitialize self. See help(type(self)) for accurate signature.\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nnp\nint\n1\n\n\n\nto_visit\nOptional\nNone\n\n\n\ncbs\nNoneType\nNone\ntype: ignore",
+    "crumbs": [
+      "crawler"
+    ]
+  },
+  {
+    "objectID": "crawler.html#key-features",
+    "href": "crawler.html#key-features",
+    "title": "crawler",
+    "section": "",
+    "text": "Parallel Processing:\n\nConfigurable number of pages (np) for concurrent processing\nEfficient browser resource management\n\nURL Management:\n\nInput: List of URLs to visit (to_visit)\nTracks progress through callback-accessible sets:\n\nvisited: Already processed URLs\nunvisited: Pending URLs\nvisit_window: Current batch of URLs (size = np)\n\n\nCallback System:\n\nExtensible through custom callbacks\nOrdered execution (ord)\nFull access to crawler state\n\n\n\nsource\n\n\n\n Crawl (np:int=1, to_visit:Optional[List[str]]=None, cbs=None)\n\nInitialize self. See help(type(self)) for accurate signature.\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nnp\nint\n1\n\n\n\nto_visit\nOptional\nNone\n\n\n\ncbs\nNoneType\nNone\ntype: ignore",
+    "crumbs": [
+      "crawler"
+    ]
+  },
+  {
+    "objectID": "crawler.html#extract-text-for-a-given-xpath",
+    "href": "crawler.html#extract-text-for-a-given-xpath",
+    "title": "crawler",
+    "section": "extract text for a given xpath",
+    "text": "extract text for a given xpath\n\nclass GetTextCB(Callback):\n    \n\n    async def after_visit(self, crawler, idx):\n        if crawler.pages[idx].url == 'https://fastcore.fast.ai/':\n            loc = await crawler.pages[idx].find_ele('//span[contains(text(), \"Welcome to fastcore\")]')\n            if loc:\n                assert await loc[0].get_text() == \"Welcome to fastcore\"\n\nC = Crawl(2, ['https://solveit.fast.ai/', 'https://fastcore.fast.ai/'], [GetTextCB()])\nawait C.run(headless=False)",
+    "crumbs": [
+      "crawler"
+    ]
+  },
+  {
+    "objectID": "crawler.html#to-traverse-all-webpages-within-the-same-domain-using",
+    "href": "crawler.html#to-traverse-all-webpages-within-the-same-domain-using",
+    "title": "crawler",
+    "section": "To traverse all webpages within the same domain using",
+    "text": "To traverse all webpages within the same domain using\n\nsource\n\nTraveseSameDomainCB\n\n TraveseSameDomainCB (url)\n\nCallback helping traveling all the links available in the same domain.\n\nurl = 'https://solveit.fast.ai/'\nC = Crawl(5, [url], [TraveseSameDomainCB(url)])\nawait C.run(headless=True)\nassert all([domain(i)==domain(url) for i in C.visited])\nassert len(C.unvisited) == 0\n\n\n\nCrawl a url and save in md\n\nsource\n\n\nToMDCB\n\n ToMDCB (base_dir='PW')\n\nCallback helping traveling all the links available in the same domain.\n\nurl = 'https://solveit.fast.ai/'\nC = Crawl(3, [url], [TraveseSameDomainCB(url), ToMDCB()])\nawait C.run(headless=False)\n\nwriting to fn=Path('PW/solveit_fast_ai/index.md')\nwriting to fn=Path('PW/solveit_fast_ai_privacy/index.md')\nwriting to fn=Path('PW/solveit_fast_ai_course_info/index.md')\nwriting to fn=Path('PW/solveit_fast_ai_terms/index.md')\nwriting to fn=Path('PW/solveit_fast_ai_learn_more/index.md')",
+    "crumbs": [
+      "crawler"
+    ]
+  },
+  {
+    "objectID": "core.html",
+    "href": "core.html",
+    "title": "core",
+    "section": "",
+    "text": "source",
+    "crumbs": [
+      "core"
+    ]
+  },
+  {
+    "objectID": "core.html#setup_browser",
+    "href": "core.html#setup_browser",
+    "title": "core",
+    "section": "setup_browser",
+    "text": "setup_browser\nSetup browser by opening up chrome and all the other objects\n\nsource\n\nsetup_browser\n\n setup_browser (*args, n:int=1, stealth:bool=False, **kwargs)\n\nBrowser context manager returns n pages and stealth for mode\n\nsource\n\n\nBrowserCleanupError\nCommon base class for all non-exit exceptions.\n\nsource\n\n\nPageCreationError\nCommon base class for all non-exit exceptions.\n\nsource\n\n\nBrowserResources\n\n BrowserResources\n                   (pw_obj:Optional[playwright.async_api._generated.Playwr\n                   ight]=None, brow:Optional[playwright.async_api._generat\n                   ed.Browser]=None, ctx:Optional[playwright.async_api._ge\n                   nerated.BrowserContext]=None,\n                   pages:List[playwright.async_api._generated.Page]=None,\n                   is_valid:bool=False)\n\n\ntry:\n        async with setup_browser(n=0, stealth=False) as obj:\n                if obj.is_valid:\n                        ...\nexcept ValueError as e:\n        assert str(e) == \"Invalid number of pages: 0\"\n\n\nasync with setup_browser(n=1, stealth=False) as obj:\n        if obj.is_valid:\n            pg = await obj.pages[0].goto('http://example.org')\n            assert  pg.status == 200",
+    "crumbs": [
+      "core"
+    ]
+  },
+  {
+    "objectID": "core.html#pages-monkey-patching",
+    "href": "core.html#pages-monkey-patching",
+    "title": "core",
+    "section": "Page’s Monkey patching",
+    "text": "Page’s Monkey patching\n\nsource\n\nwait_page\n\n wait_page (page:playwright.async_api._generated.Page, pause=50,\n            timeout=5000)\n\nmoneky patching Page.wait_page. Wait until page and frames are ready to be loaded",
+    "crumbs": [
+      "core"
+    ]
+  },
+  {
+    "objectID": "core.html#section",
+    "href": "core.html#section",
+    "title": "core",
+    "section": "",
+    "text": "async with setup_browser(n=1, headless=True) as obj:\n        if obj.is_valid:\n                pg = await obj.pages[0].goto('http://example.org')\n                await obj.pages[0].wait()\n                assert  pg.status == 200\n\n\nsource\n\nfind_ele\n\n find_ele (page:playwright.async_api._generated.Page, locator:str)\n\nTo locate elements on a web page using a given locator and return a list of those elements. Logs error if the locator object is not present and returns None.\n\nasync with setup_browser(n=1, headless=True) as obj:\n    if obj.is_valid:\n        await obj.pages[0].goto('https://nbdev.fast.ai/')\n        await obj.pages[0].wait()\n        assert len(await obj.pages[0].find_ele(\"//span[contains(text(), 'Blog')]\") ) != 0\n        assert await obj.pages[0].find_ele(\"//span[contains(text(), 'blah')]\") is None\n\nError find : @https://nbdev.fast.ai/  for //span[contains(text(), 'blah')] :-&gt;  Element not found.  \n\n\n\nsource\n\n\nfind_all_links\n\n find_all_links (page:playwright.async_api._generated.Page)\n\n\nasync with setup_browser(n=1, headless=True) as obj:\n        if obj.is_valid:\n            pg = obj.pages[0]\n            await pg.goto('https://nbdev.fast.ai/',timeout= 10000)\n            await pg.wait(10000)\n\n            links = await find_all_links(obj.pages[0])\n            assert type(links) == list",
+    "crumbs": [
+      "core"
+    ]
+  },
+  {
+    "objectID": "core.html#locators-monkey-patching",
+    "href": "core.html#locators-monkey-patching",
+    "title": "core",
+    "section": "Locator’s Monkey patching",
+    "text": "Locator’s Monkey patching\n\nsource\n\nleft_click\n\n left_click (element:playwright.async_api._generated.Locator,\n             timeout=5000)\n\nfor a given element it performs single click operation\n\nurl = 'https://solveit.fast.ai/'\nasync with setup_browser(n=1, headless=False) as obj:\n    if obj.is_valid:\n        await obj.pages[0].goto(url)\n        await obj.pages[0].wait()\n        loc = await obj.pages[0].find_ele(\"//a[contains(text(), 'Course Details')]\") \n        assert len(loc) != 0\n                        \n        await loc[0].left_click()\n        assert url != obj.pages[0].url\n\n\nsource\n\n\nenter_txt\n\n enter_txt (element:playwright.async_api._generated.Locator, text:str,\n            timeout:int=5000)\n\nFor a given element of type Locator, it types the specified text\n\nasync with setup_browser(n=1, headless=True) as obj:\n    if obj.is_valid:\n        await obj.pages[0].goto('https://nbdev.fast.ai/')\n        await obj.pages[0].wait()\n        loc = await obj.pages[0].find_ele(\"//button[1]\") \n        assert len(loc) != 0\n                        \n        await loc[0].left_click()\n        await obj.pages[0].wait()\n        inp =  await obj.pages[0].find_ele(\"//input\") \n        await inp[0].left_click()\n        await inp[0].enter_txt(\"type_text\")\n\n        assert  await inp[0].input_value() == \"type_text\"\n\n\nsource\n\n\nget_text\n\n get_text (element:playwright.async_api._generated.Locator,\n           timeout:int=5000)\n\nGets the text content of an Locator element\n\nasync with setup_browser(n=1, headless=True) as obj:\n    if obj.is_valid:\n        await obj.pages[0].goto('https://nbdev.fast.ai/')\n        await obj.pages[0].wait()\n        loc = await obj.pages[0].find_ele('//a[@role=\"button\"][1]') \n        assert len(loc) != 0\n                        \n        assert await loc[0].get_text() == \"Get started\"",
+    "crumbs": [
+      "core"
+    ]
+  }
+]
