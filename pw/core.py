@@ -64,9 +64,11 @@ async def setup_browser(*args, n: int = 1, stealth: bool = False, **kwargs) -> A
         
         obj.pw_obj = await async_playwright().start()
         obj.brow = await obj.pw_obj.chromium.launch(*args, **kwargs)
-        obj.ctx = await obj.brow.new_context(accept_downloads=True,
-                                             storage_state={'cookies': [], 'origins': []}
-                                             )
+        obj.ctx = await obj.brow.new_context(
+            ignore_https_errors=True,
+            bypass_csp=True,
+            accept_downloads=True,
+            storage_state={'cookies': [], 'origins': []})
         obj.pages = []
         
         for _ in range(n):
