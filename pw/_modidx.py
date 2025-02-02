@@ -41,4 +41,8 @@ d = { 'settings': { 'branch': 'main',
                            'pw.helper.is_same_resource': ('helper.html#is_same_resource', 'pw/helper.py'),
                            'pw.helper.print_md': ('helper.html#print_md', 'pw/helper.py'),
                            'pw.helper.table2df': ('helper.html#table2df', 'pw/helper.py'),
-                           'pw.helper.url2fn': ('helper.html#url2fn', 'pw/helper.py')}}}
+                           'pw.helper.url2fn': ('helper.html#url2fn', 'pw/helper.py')},
+            'pw.screenerCB': { 'pw.screenerCB.AnualReportCB': ('screenercb.html#anualreportcb', 'pw/screenerCB.py'),
+                               'pw.screenerCB.AnualReportCB.__init__': ('screenercb.html#anualreportcb.__init__', 'pw/screenerCB.py'),
+                               'pw.screenerCB.AnualReportCB.after_visit': ('screenercb.html#anualreportcb.after_visit', 'pw/screenerCB.py'),
+                               'pw.screenerCB.screener_url': ('screenercb.html#screener_url', 'pw/screenerCB.py')}}}
